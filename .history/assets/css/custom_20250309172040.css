@@ -1,0 +1,12 @@
+:root{
+	--bg-navbar-top: #0d6efd;
+	--white: #fff;
+}
+
+nav.navbar{
+	background-color: var(--bg-navbar-top) !important;
+}
+
+nav.navbar a{
+	color: var(--white) !important;
+}
