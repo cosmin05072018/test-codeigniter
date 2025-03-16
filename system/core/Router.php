@@ -122,9 +122,6 @@ class CI_Router {
 	 * @param	array	$routing
 	 * @return	void
 	 */
-
-	 /** @var CI_URI */
-	 protected $uri; // Definim proprietatea pentru a evita eroarea
 	public function __construct($routing = NULL)
 	{
 		$this->config =& load_class('Config', 'core');

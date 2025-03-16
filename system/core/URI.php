@@ -97,12 +97,9 @@ class CI_URI {
 	 *
 	 * @return	void
 	 */
-
-	     /** @var object */
-		 protected $config; // Adăugăm proprietatea explicit
 	public function __construct()
 	{
-		$this->config = &load_class('Config', 'core');
+		$this->config =& load_class('Config', 'core');
 
 		// If query strings are enabled, we don't need to parse any segments.
 		// However, they don't make sense under CLI.

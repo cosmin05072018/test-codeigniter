@@ -134,12 +134,8 @@ class CI_Loader {
 	 *
 	 * @return	void
 	 */
-
-	  /** @var CI_Loader */
-	  protected $load;
 	public function __construct()
 	{
-		$this->load = $this;
 		$this->_ci_ob_level = ob_get_level();
 		$this->_ci_classes =& is_loaded();
 

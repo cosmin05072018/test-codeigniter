@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -37,7 +36,7 @@
  * @since	Version 1.0.0
  * @filesource
  */
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Application Controller Class
@@ -51,42 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		https://codeigniter.com/userguide3/general/controllers.html
  */
-class CI_Controller
-{
-
-
-	/** @var CI_Benchmark */
-	protected $benchmark;
-
-	/** @var CI_Hooks */
-	protected $hooks;
-
-	/** @var CI_Config */
-	protected $config;
-
-	/** @var CI_Utf8 */
-	protected $utf8;
-
-	/** @var CI_URI */
-	protected $uri;
-
-	/** @var CI_Router */
-	protected $router;
-
-	/** @var CI_Output */
-	protected $output;
-
-	/** @var CI_Security */
-	protected $security;
-
-	/** @var CI_Input */
-	protected $input;
-
-	/** @var CI_Lang */
-	protected $lang;
-
-	/** @var CI_Log */
-    protected $log;
+class CI_Controller {
 
 	/**
 	 * Reference to the CI singleton
@@ -109,37 +73,21 @@ class CI_Controller
 	 */
 	public function __construct()
 	{
-		$this->benchmark = &load_class('Benchmark', 'core');
-		$this->hooks     = &load_class('Hooks', 'core');
-		$this->config    = &load_class('Config', 'core');
-		$this->utf8      = &load_class('Utf8', 'core');
-		$this->uri       = &load_class('URI', 'core');
-		$this->router    = &load_class('Router', 'core');
-		$this->output = &load_class('Output', 'core');
-		$this->security  = &load_class('Security', 'core');
-		$this->input     = &load_class('Input', 'core');
-		$this->lang      = &load_class('Lang', 'core');
-		$this->log       = &load_class('Log', 'core'); // Inițializăm log-ul
-
-		log_message('info', 'Controller Class Initialized');
-		self::$instance = &$this;
+		self::$instance =& $this;
 
 		// Assign all the class objects that were instantiated by the
 		// bootstrap file (CodeIgniter.php) to local class variables
 		// so that CI can run as one big super object.
-		foreach (is_loaded() as $var => $class) {
-			$this->$var = &load_class($class);
+		foreach (is_loaded() as $var => $class)
+		{
+			$this->$var =& load_class($class);
 		}
 
-		$this->load = &load_class('Loader', 'core');
+		$this->load =& load_class('Loader', 'core');
 		$this->load->initialize();
 		log_message('info', 'Controller Class Initialized');
 	}
 
-
-	public function __get($key) {
-        return get_instance()->$key;
-    }
 	// --------------------------------------------------------------------
 
 	/**
@@ -152,4 +100,5 @@ class CI_Controller
 	{
 		return self::$instance;
 	}
+
 }
