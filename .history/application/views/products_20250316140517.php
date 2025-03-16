@@ -23,13 +23,13 @@
 							<td><?php echo $product->description; ?></td>
 							<td><?php echo $product->price; ?> RON</td>
 							<?php if (!empty($permissions)) : ?>
-								<td class="d-flex flex-wrap gap-3">
-									<?php if ($can_edit_product): ?>
+								<td>
+									<?php if (isset($permissions[1])) : ?>
 										<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-<?= $product->id ?>">
 											Edit
 										</button>
 										<!-- Modal -->
-										<div class="modal fade" id="modal-<?= $product->id ?>" tabindex="-1" aria-labelledby="modalLabel-<?= $product->id ?>" aria-hidden="true">
+										<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 											<div class="modal-dialog">
 												<div class="modal-content">
 													<div class="modal-header">
@@ -37,34 +37,19 @@
 														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 													</div>
 													<div class="modal-body">
-														<form method="post" action="<?= base_url('index.php/dashboard-edit-product'); ?>">
-															<input type="hidden" name="id" value="<?php echo isset($product->id) ? $product->id : ''; ?>">
-															<div class="mb-3">
-																<label for="productName" class="form-label">Product Name</label>
-																<input type="text" class="form-control" id="productName" name="name" value="<?php echo isset($product->name) ? $product->name : ''; ?>" required>
-															</div>
-															<div class="mb-3">
-																<label for="productDescription" class="form-label">Product Description</label>
-																<textarea class="form-control" id="productDescription" name="description" rows="3" required><?php echo isset($product->description) ? $product->description : ''; ?></textarea>
-															</div>
-															<div class="mb-3">
-																<label for="productPrice" class="form-label">Product Price (RON)</label>
-																<input type="number" class="form-control" id="productPrice" name="price" value="<?php echo isset($product->price) ? $product->price : ''; ?>" required>
-															</div>
-															<button type="submit" class="btn btn-primary">Save Changes</button>
-														</form>
+														...
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+														<button type="button" class="btn btn-primary">Save changes</button>
 													</div>
 												</div>
 											</div>
 										</div>
 									<?php endif; ?>
-									<?php if ($can_delete_product): ?>
-										<form method="post" action="<?= base_url('index.php/dashboard-delete-product'); ?>">
-											<input type="hidden" name="product_id" value="<?= $product->id; ?>">
-											<button type="submit" class="btn btn-danger">Delete</button>
-										</form>
+									<?php if (isset($permissions[2])) : ?>
+										<button type="button" class="btn btn-danger">Delete</button>
 									<?php endif; ?>
-
 								</td>
 							<?php endif; ?>
 						</tr>
@@ -73,7 +58,7 @@
 			</table>
 		</div>
 
-		<?php if ($can_add_product): ?>
+		<?php if (!empty($permissions) && isset($permissions[0])) : ?>
 			<div class="col-12 col-md-4 border border-1 py-2">
 				<h2 class="mb-0">Add Product</h2>
 				<form method="post" action="<?= base_url('index.php/dashboard-add-product'); ?>">
@@ -113,20 +98,6 @@
 	</div>
 <?php endif; ?>
 
-<?php if ($this->session->flashdata('add-product-success')): ?>
-	<div class="toast-container position-fixed bottom-0 end-0 p-3">
-		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="toast-header">
-				<strong class="me-auto">Notification</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-			<div class="toast-body">
-				The product was successfully added
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
-
 <?php if ($this->session->flashdata('remove')): ?>
 	<div class="toast-container position-fixed bottom-0 end-0 p-3">
 		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -140,35 +111,6 @@
 		</div>
 	</div>
 <?php endif; ?>
-
-<?php if ($this->session->flashdata('success-edit')): ?>
-	<div class="toast-container position-fixed bottom-0 end-0 p-3">
-		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="toast-header">
-				<strong class="me-auto">Notification</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-			<div class="toast-body">
-				The product has been updated successfully!
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
-
-<?php if ($this->session->flashdata('delete-success')): ?>
-	<div class="toast-container position-fixed bottom-0 end-0 p-3">
-		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="toast-header">
-				<strong class="me-auto">Notification</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-			<div class="toast-body">
-				Product deleted successfully.
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
-
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {

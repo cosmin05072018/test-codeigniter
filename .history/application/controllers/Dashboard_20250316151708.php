@@ -77,10 +77,7 @@ class Dashboard extends CI_Controller
 
 		$logged_in_user_id = $this->session->userdata('user_id');
 		$permissions_data = $this->User_permission_model->get_permissions_by_user($logged_in_user_id);
-		$permission_ids = array_column($permissions_data, 'id');
-		$data['can_add_product'] = in_array(1, $permission_ids);
-		$data['can_edit_product'] = in_array(2, $permission_ids);
-		$data['can_delete_product'] = in_array(3, $permission_ids);
+
 		$data['products'] = $this->Product_model->get_all_products();
 		$data['permissions'] = $permissions_data;
 
@@ -134,36 +131,9 @@ class Dashboard extends CI_Controller
 		$this->load->model('Product_model');
 
 		if ($this->Product_model->edit_product($id, $name, $description, $price)) {
-			$this->session->set_flashdata('success-edit', 'The product has been updated successfully!');
+			$this->session->set_flashdata('success', 'Produsul a fost actualizat cu succes!');
 		} else {
-			$this->session->set_flashdata('error-edit', 'Error updating product.');
-		}
-
-		redirect(base_url('index.php/dashboard-view-products'));
-	}
-
-	public function deleteProduct()
-	{
-		$logged_in_user_id = $this->session->userdata('user_id');
-
-		$permissions_data = $this->User_permission_model->get_permissions_by_user($logged_in_user_id);
-		$permission_ids = array_column($permissions_data, 'id');
-
-		if (!in_array(3, $permission_ids)) {
-			$this->session->set_flashdata('error', 'You do not have permission to delete products.');
-			redirect(base_url('index.php/dashboard-view-products'));
-		}
-
-		$product_id = $this->input->post('product_id');
-
-		if (!$product_id) {
-			$this->session->set_flashdata('error', 'Invalid product ID.');
-			redirect(base_url('index.php/dashboard-view-products'));
-		}
-		if ($this->Product_model->delete_product($product_id)) {
-			$this->session->set_flashdata('delete-success', 'Product deleted successfully.');
-		} else {
-			$this->session->set_flashdata('delete-success', 'Failed to delete the product.');
+			$this->session->set_flashdata('error', 'Eroare la actualizarea produsului.');
 		}
 
 		redirect(base_url('index.php/dashboard-view-products'));

@@ -23,7 +23,7 @@
 							<td><?php echo $product->description; ?></td>
 							<td><?php echo $product->price; ?> RON</td>
 							<?php if (!empty($permissions)) : ?>
-								<td class="d-flex flex-wrap gap-3">
+								<td>
 									<?php if ($can_edit_product): ?>
 										<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-<?= $product->id ?>">
 											Edit
@@ -59,7 +59,7 @@
 										</div>
 									<?php endif; ?>
 									<?php if ($can_delete_product): ?>
-										<form method="post" action="<?= base_url('index.php/dashboard-delete-product'); ?>">
+										<form method="post" action="<?= base_url('dashboard-delete-product'); ?>">
 											<input type="hidden" name="product_id" value="<?= $product->id; ?>">
 											<button type="submit" class="btn btn-danger">Delete</button>
 										</form>

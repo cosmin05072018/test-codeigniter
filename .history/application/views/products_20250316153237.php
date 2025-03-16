@@ -23,7 +23,7 @@
 							<td><?php echo $product->description; ?></td>
 							<td><?php echo $product->price; ?> RON</td>
 							<?php if (!empty($permissions)) : ?>
-								<td class="d-flex flex-wrap gap-3">
+								<td>
 									<?php if ($can_edit_product): ?>
 										<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-<?= $product->id ?>">
 											Edit
@@ -59,12 +59,8 @@
 										</div>
 									<?php endif; ?>
 									<?php if ($can_delete_product): ?>
-										<form method="post" action="<?= base_url('index.php/dashboard-delete-product'); ?>">
-											<input type="hidden" name="product_id" value="<?= $product->id; ?>">
-											<button type="submit" class="btn btn-danger">Delete</button>
-										</form>
+										<button type="button" class="btn btn-danger">Delete</button>
 									<?php endif; ?>
-
 								</td>
 							<?php endif; ?>
 						</tr>
@@ -149,26 +145,11 @@
 				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 			</div>
 			<div class="toast-body">
-				The product has been updated successfully!
+			The product has been updated successfully!
 			</div>
 		</div>
 	</div>
 <?php endif; ?>
-
-<?php if ($this->session->flashdata('delete-success')): ?>
-	<div class="toast-container position-fixed bottom-0 end-0 p-3">
-		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="toast-header">
-				<strong class="me-auto">Notification</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-			<div class="toast-body">
-				Product deleted successfully.
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
-
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {

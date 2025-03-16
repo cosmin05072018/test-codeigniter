@@ -143,29 +143,29 @@ class Dashboard extends CI_Controller
 	}
 
 	public function deleteProduct()
-	{
-		$logged_in_user_id = $this->session->userdata('user_id');
+{
+    $logged_in_user_id = $this->session->userdata('user_id');
 
-		$permissions_data = $this->User_permission_model->get_permissions_by_user($logged_in_user_id);
-		$permission_ids = array_column($permissions_data, 'id');
+    $permissions_data = $this->User_permission_model->get_permissions_by_user($logged_in_user_id);
+    $permission_ids = array_column($permissions_data, 'id');
 
-		if (!in_array(3, $permission_ids)) {
-			$this->session->set_flashdata('error', 'You do not have permission to delete products.');
-			redirect(base_url('index.php/dashboard-view-products'));
-		}
-
-		$product_id = $this->input->post('product_id');
-
-		if (!$product_id) {
-			$this->session->set_flashdata('error', 'Invalid product ID.');
-			redirect(base_url('index.php/dashboard-view-products'));
-		}
-		if ($this->Product_model->delete_product($product_id)) {
-			$this->session->set_flashdata('delete-success', 'Product deleted successfully.');
-		} else {
-			$this->session->set_flashdata('delete-success', 'Failed to delete the product.');
-		}
-
+    if (!in_array(3, $permission_ids)) {
+        $this->session->set_flashdata('error', 'You do not have permission to delete products.');
 		redirect(base_url('index.php/dashboard-view-products'));
-	}
+    }
+
+    $product_id = $this->input->post('product_id');
+
+    if (!$product_id) {
+        $this->session->set_flashdata('error', 'Invalid product ID.');
+		redirect(base_url('index.php/dashboard-view-products'));
+    }
+    if ($this->Product_model->delete_product($product_id)) {
+        $this->session->set_flashdata('delete-success', 'Product deleted successfully.');
+    } else {
+        $this->session->set_flashdata('delete-success', 'Failed to delete the product.');
+    }
+	redirect(base_url('index.php/dashboard-view-products'));
+}
+
 }

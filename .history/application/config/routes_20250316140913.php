@@ -67,5 +67,4 @@ $route['dashboard-assign-permision'] = 'Dashboard/assign_permission';
 $route['dashboard-view-products'] = 'Dashboard/viewProducts';
 $route['dashboard-add-product'] = 'Dashboard/addProduct';
 $route['dashboard-edit-product'] = 'Dashboard/editProduct';
-$route['dashboard-delete-product'] = 'Dashboard/deleteProduct';
 
