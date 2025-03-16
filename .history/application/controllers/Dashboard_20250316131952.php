@@ -55,6 +55,12 @@ class Dashboard extends CI_Controller
 		$user_id = $this->input->post('user_id');
 		$permissions = $this->input->post('permissions');
 
+		$this->table = 'user_permissions';
+		$this->db->select('permission_id');
+        $this->db->from('user_permissions');
+        $this->db->where('user_id', $user_id);
+        $query = $this->db->get();
+
 		$this->load->model('Permission_model');
 		$this->Permission_model->remove_user_permissions($user_id);
 
@@ -76,10 +82,8 @@ class Dashboard extends CI_Controller
 	{
 
 		$logged_in_user_id = $this->session->userdata('user_id');
-		$permissions_data = $this->User_permission_model->get_permissions_by_user($logged_in_user_id);
-
+		$permissions = array();
 		$data['products'] = $this->Product_model->get_all_products();
-		$data['permissions'] = $permissions_data;
 
 		$this->load->view('components/header');
 		$this->load->view('components/navbar');

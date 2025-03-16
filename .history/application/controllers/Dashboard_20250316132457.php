@@ -77,9 +77,12 @@ class Dashboard extends CI_Controller
 
 		$logged_in_user_id = $this->session->userdata('user_id');
 		$permissions_data = $this->User_permission_model->get_permissions_by_user($logged_in_user_id);
+		$can_add_product = $permissions_data[0];
 
 		$data['products'] = $this->Product_model->get_all_products();
-		$data['permissions'] = $permissions_data;
+
+		var_dump($data['permissions']);
+		die();
 
 		$this->load->view('components/header');
 		$this->load->view('components/navbar');

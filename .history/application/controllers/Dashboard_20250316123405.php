@@ -7,15 +7,10 @@ class Dashboard extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->load->library('session');
-		$this->load->library('form_validation');
-
 		$this->load->database();
-
 		$this->load->model('Permission_model');
 		$this->load->model('Product_model');
-		$this->load->model('User_permission_model');
 
 		if (!$this->session->userdata('is_logged_in')) {
 			redirect(base_url());
@@ -72,52 +67,16 @@ class Dashboard extends CI_Controller
 		redirect(base_url('index.php/dashboard-view-users')); // Redirecționează la pagina dashboard
 	}
 
-	public function viewProducts()
-	{
-
-		$logged_in_user_id = $this->session->userdata('user_id');
-		$permissions_data = $this->User_permission_model->get_permissions_by_user($logged_in_user_id);
-
-		$data['products'] = $this->Product_model->get_all_products();
-		$data['permissions'] = $permissions_data;
+	public function viewProducts() {
 
 		$this->load->view('components/header');
 		$this->load->view('components/navbar');
-		$this->load->view('products', $data);
+		$this->load->view('products');
 		$this->load->view('components/footer');
 	}
 
-	public function addProduct()
-	{
-		$this->form_validation->set_rules('name', 'Product Name', 'required', array(
-			'required' => 'The %s field is required.'
-		));
-		$this->form_validation->set_rules('description', 'Product Description', 'required', array(
-			'required' => 'The %s field is required.'
-		));
-		$this->form_validation->set_rules('price', 'Product Price', 'required|numeric', array(
-			'required' => 'The %s field is required.',
-			'numeric'  => 'The %s must be a valid number.'
-		));
+	public function addProduct(){
 
-
-		if ($this->form_validation->run() == FALSE) {
-			redirect(base_url('index.php/dashboard-view-products'));
-		} else {
-			$name = $this->input->post('name');
-			$description = $this->input->post('description');
-			$price = $this->input->post('price');
-
-
-			$result = $this->Product_model->add_product($name, $description, $price);
-
-			if ($result) {
-				$this->session->set_flashdata('success', 'The product was successfully added!');
-				redirect(base_url('index.php/dashboard-view-products'));
-			} else {
-				$this->session->set_flashdata('error', 'An error occurred while adding the product.');
-				redirect(base_url('index.php/dashboard-view-products'));
-			}
-		}
+		redirect(base_url('index.php/dashboard-view-products'));
 	}
 }

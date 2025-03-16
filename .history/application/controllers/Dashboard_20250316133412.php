@@ -80,7 +80,8 @@ class Dashboard extends CI_Controller
 
 		$data['products'] = $this->Product_model->get_all_products();
 		$data['permissions'] = $permissions_data;
-
+		var_dump($data['permissions']);
+		die();
 		$this->load->view('components/header');
 		$this->load->view('components/navbar');
 		$this->load->view('products', $data);

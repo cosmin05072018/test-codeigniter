@@ -80,7 +80,7 @@ class User_permission_model extends CI_Model {
      * @return bool
      */
     public function has_permission($user_id, $permission_id) {
-        $this->db->from('user_permissions');
+        $this->db->from($this->table);
         $this->db->where('user_id', $user_id);
         $this->db->where('permission_id', $permission_id);
         return $this->db->count_all_results() > 0;

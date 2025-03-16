@@ -7,15 +7,10 @@ class Dashboard extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->load->library('session');
-		$this->load->library('form_validation');
-
 		$this->load->database();
-
 		$this->load->model('Permission_model');
 		$this->load->model('Product_model');
-		$this->load->model('User_permission_model');
 
 		if (!$this->session->userdata('is_logged_in')) {
 			redirect(base_url());
@@ -75,15 +70,9 @@ class Dashboard extends CI_Controller
 	public function viewProducts()
 	{
 
-		$logged_in_user_id = $this->session->userdata('user_id');
-		$permissions_data = $this->User_permission_model->get_permissions_by_user($logged_in_user_id);
-
-		$data['products'] = $this->Product_model->get_all_products();
-		$data['permissions'] = $permissions_data;
-
 		$this->load->view('components/header');
 		$this->load->view('components/navbar');
-		$this->load->view('products', $data);
+		$this->load->view('products');
 		$this->load->view('components/footer');
 	}
 
@@ -119,5 +108,7 @@ class Dashboard extends CI_Controller
 				redirect(base_url('index.php/dashboard-view-products'));
 			}
 		}
+
+
 	}
 }

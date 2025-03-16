@@ -86,28 +86,18 @@
 </div>
 
 <?php if ($this->session->flashdata('success')): ?>
-	<div class="toast-container position-fixed bottom-0 end-0 p-3">
-		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="toast-header">
-				<strong class="me-auto">Notification</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-			<div class="toast-body">
-				You set permision with succes!
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
+	<button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
 
-<?php if ($this->session->flashdata('remove')): ?>
 	<div class="toast-container position-fixed bottom-0 end-0 p-3">
 		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
 			<div class="toast-header">
-				<strong class="me-auto">Notification</strong>
+				<img src="..." class="rounded me-2" alt="...">
+				<strong class="me-auto">Bootstrap</strong>
+				<small>11 mins ago</small>
 				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 			</div>
 			<div class="toast-body">
-				You remove all permisions with succes!
+				Hello, world! This is a toast message.
 			</div>
 		</div>
 	</div>

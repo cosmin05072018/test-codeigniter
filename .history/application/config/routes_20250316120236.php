@@ -65,5 +65,4 @@ $route['dashboard'] = 'Dashboard/index';
 $route['dashboard-view-users'] = 'Dashboard/viewUsers';
 $route['dashboard-assign-permision'] = 'Dashboard/assign_permission';
 $route['dashboard-view-products'] = 'Dashboard/viewProducts';
-$route['dashboard-add-product'] = 'Dashboard/addProduct';
 

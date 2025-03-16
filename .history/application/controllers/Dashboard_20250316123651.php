@@ -7,15 +7,10 @@ class Dashboard extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->load->library('session');
-		$this->load->library('form_validation');
-
 		$this->load->database();
-
 		$this->load->model('Permission_model');
 		$this->load->model('Product_model');
-		$this->load->model('User_permission_model');
 
 		if (!$this->session->userdata('is_logged_in')) {
 			redirect(base_url());
@@ -75,20 +70,15 @@ class Dashboard extends CI_Controller
 	public function viewProducts()
 	{
 
-		$logged_in_user_id = $this->session->userdata('user_id');
-		$permissions_data = $this->User_permission_model->get_permissions_by_user($logged_in_user_id);
-
-		$data['products'] = $this->Product_model->get_all_products();
-		$data['permissions'] = $permissions_data;
-
 		$this->load->view('components/header');
 		$this->load->view('components/navbar');
-		$this->load->view('products', $data);
+		$this->load->view('products');
 		$this->load->view('components/footer');
 	}
 
 	public function addProduct()
 	{
+		// Setăm regulile de validare a formularului
 		$this->form_validation->set_rules('name', 'Product Name', 'required', array(
 			'required' => 'The %s field is required.'
 		));
@@ -100,23 +90,27 @@ class Dashboard extends CI_Controller
 			'numeric'  => 'The %s must be a valid number.'
 		));
 
-
+		// Verificăm dacă validarea a reușit
 		if ($this->form_validation->run() == FALSE) {
-			redirect(base_url('index.php/dashboard-view-products'));
+			// Dacă validarea nu a reușit, încărcăm din nou formularul cu erorile
+			$this->load->view('product/add_product');
 		} else {
+			// Dacă validarea a reușit, procesăm formularul
 			$name = $this->input->post('name');
 			$description = $this->input->post('description');
 			$price = $this->input->post('price');
 
-
+			// Adăugăm produsul în baza de date
 			$result = $this->Product_model->add_product($name, $description, $price);
 
 			if ($result) {
+				// Redirecționăm utilizatorul sau afișăm mesaj de succes
 				$this->session->set_flashdata('success', 'The product was successfully added!');
-				redirect(base_url('index.php/dashboard-view-products'));
+				redirect('product/index'); // Redirecționare la lista de produse
 			} else {
+				// Mesaj de eroare în cazul în care adăugarea a eșuat
 				$this->session->set_flashdata('error', 'An error occurred while adding the product.');
-				redirect(base_url('index.php/dashboard-view-products'));
+				$this->load->view('product/add_product');
 			}
 		}
 	}
